@@ -51,6 +51,11 @@ func (m *Mysql) Promotable() bool {
 			log.Error("can't.promotable.GetGTID.error:%v", err)
 			return false
 		}
+		//Slave_IO_Running = Yes, So master is alive
+		//if (gtid.Slave_IO_Running) {
+		//	log.Warning("Maybe Master is alive. Slave IO_thread not timeout (slave_net_timeout)")
+		//    return false
+		//}
 
 		promotable = (gtid.Slave_SQL_Running)
 		log.Warning("mysql[%v].Promotable.sql_thread[%v]", m.getConnStr(), promotable)

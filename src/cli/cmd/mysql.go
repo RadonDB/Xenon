@@ -436,6 +436,19 @@ func mysqlRebuildMeCommandFn(cmd *cobra.Command, args []string) {
 		}
 		log.Warning("S10-->apply-log.end....")
 	}
+	
+        //Pre 11 change datadir owner ->mysql. patch by wubx
+	{
+		datadir := conf.Backup.BackupDir
+		cmds :="bash"
+		args := []string{
+			"-c",
+			fmt.Sprintf("chown -R mysql:mysql %s", datadir),
+		}
+		_, err := common.RunCommand(cmds, args...)
+		ErrorOK(err)
+		log.Warning("Pre-S11-->chown owner to mysql[%v]", datadir)
+	}
 
 	// 11. start mysqld
 	{

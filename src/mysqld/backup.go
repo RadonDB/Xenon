@@ -136,6 +136,7 @@ func (b *Backup) backupCommands(iskey bool, req *model.BackupRPCRequest) []strin
 			req.BackupDir)
 	}
 	arg = fmt.Sprintf("%s | %s", backup, ssh)
+	b.log.Warning(arg)
 	return []string{
 		"-c",
 		arg,
