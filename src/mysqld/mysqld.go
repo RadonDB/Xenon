@@ -61,7 +61,7 @@ func (m *Mysqld) StartMysqld() error {
 	}
 
 	timeout := 3000
-	args := m.argsHandler.Start()
+	args := m.argsHandler.GenerateStartCmd()
 	if _, err := m.cmd.RunCommandWithTimeout(timeout, bash, args); err != nil {
 		log.Error("mysqld.start..error[%+v]", err)
 		return err
@@ -81,7 +81,7 @@ func (m *Mysqld) StopMysqld() error {
 	}
 
 	timeout := 5000
-	args := m.argsHandler.Stop()
+	args := m.argsHandler.GenerateStopCmd()
 	if _, err := m.cmd.RunCommandWithTimeout(timeout, bash, args); err != nil {
 		log.Error("mysqld.stop.mysqld.error[%+v]", err)
 		return err
@@ -98,7 +98,7 @@ func (m *Mysqld) KillMysqld() error {
 	timeout := 3000
 	log := m.log
 
-	args := m.argsHandler.Kill()
+	args := m.argsHandler.GenerateKillCmd()
 	log.Warning("mysqld.prepare.to.kill[%v]...", args)
 	if _, err := m.cmd.RunCommandWithTimeout(timeout, bash, args); err != nil {
 		log.Error("mysqld.kill.mysqld.error[%+v]", err)
@@ -114,7 +114,7 @@ func (m *Mysqld) KillMysqld() error {
 func (m *Mysqld) isMysqldRunning() bool {
 	log := m.log
 
-	args := m.argsHandler.IsRunning()
+	args := m.argsHandler.GenerateIsRunningCmd()
 	outs, err := m.cmd.RunCommand(bash, args)
 	if err != nil {
 		log.Error("mysqld57.isMysqldRunning.error[%v:%+v]", outs, err)

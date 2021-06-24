@@ -76,7 +76,7 @@ func NewMockArgs() *MockArgs {
 }
 
 // Start used to start the mock.
-func (l *MockArgs) Start() []string {
+func (l *MockArgs) GenerateStartCmd() []string {
 	args := []string{
 		"-c",
 		"ls -l",
@@ -86,7 +86,7 @@ func (l *MockArgs) Start() []string {
 }
 
 // Stop used to stop the mock.
-func (l *MockArgs) Stop() []string {
+func (l *MockArgs) GenerateStopCmd() []string {
 	args := []string{
 		"-c",
 		"ls -l",
@@ -96,7 +96,7 @@ func (l *MockArgs) Stop() []string {
 }
 
 // IsRunning used to check the mock running.
-func (l *MockArgs) IsRunning() []string {
+func (l *MockArgs) GenerateIsRunningCmd() []string {
 	args := []string{
 		"-c",
 		"ls -l",
@@ -106,7 +106,7 @@ func (l *MockArgs) IsRunning() []string {
 }
 
 // Kill used to kill the mock.
-func (l *MockArgs) Kill() []string {
+func (l *MockArgs) GenerateKillCmd() []string {
 	args := []string{
 		"-c",
 		"ls -l",

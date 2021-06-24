@@ -38,7 +38,7 @@ func NewLinuxArgs(conf *config.BackupConfig) *LinuxArgs {
 }
 
 // Start used to start mysqld.
-func (l *LinuxArgs) Start() []string {
+func (l *LinuxArgs) GenerateStartCmd() []string {
 	safe57 := filepath.Join(l.conf.Basedir, mysqldsafe)
 	args := []string{
 		"-c",
@@ -48,7 +48,7 @@ func (l *LinuxArgs) Start() []string {
 }
 
 // Stop used to stop the mysqld.
-func (l *LinuxArgs) Stop() []string {
+func (l *LinuxArgs) GenerateStopCmd() []string {
 	admin57 := filepath.Join(l.conf.Basedir, mysqladmin)
 	args := []string{
 		"-c",
@@ -62,7 +62,7 @@ func (l *LinuxArgs) Stop() []string {
 }
 
 // IsRunning used to check the mysqld is running or not.
-func (l *LinuxArgs) IsRunning() []string {
+func (l *LinuxArgs) GenerateIsRunningCmd() []string {
 	// [m] is a trick to stop you picking up the actual grep process itself
 	safe57 := fmt.Sprintf("[m]ysqld_safe --defaults-file=%s", l.conf.DefaultsFile)
 	args := []string{
@@ -73,7 +73,7 @@ func (l *LinuxArgs) IsRunning() []string {
 }
 
 // Kill used to kill -9 the mysqld process.
-func (l *LinuxArgs) Kill() []string {
+func (l *LinuxArgs) GenerateKillCmd() []string {
 	args := []string{
 		"-c",
 	}

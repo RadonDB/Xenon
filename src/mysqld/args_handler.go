@@ -10,15 +10,15 @@ package mysqld
 
 // ArgsHandler for mysqld operation.
 type ArgsHandler interface {
-	// mysqld start args
-	Start() []string
+	// generate mysqld start args
+	GenerateStartCmd() []string
 
-	// mysqld stop args
-	Stop() []string
+	// generate mysqld stop args
+	GenerateStopCmd() []string
 
-	// mysqld isrunning args
-	IsRunning() []string
+	// generate mysqld isrunning args
+	GenerateIsRunningCmd() []string
 
-	// mysqld kill args
-	Kill() []string
+	// generate mysqld kill args
+	GenerateKillCmd() []string
 }
