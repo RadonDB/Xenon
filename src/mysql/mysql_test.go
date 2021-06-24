@@ -74,7 +74,7 @@ func TestMysqlGTIDGreatThan(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 
 	// Set mock functions
 	mysql.SetMysqlHandler(new(MockGTIDB))

@@ -22,6 +22,9 @@ import (
 	"xbase/xrpc"
 )
 
+// execute timeout: 60s
+const TIMEOUT int = 60 * 1000
+
 type RPCS struct {
 	NodeRPC   *NodeRPC
 	ServerRPC *ServerRPC
@@ -83,7 +86,7 @@ func (s *Server) setupMysqld() {
 func (s *Server) setupMysql() {
 	log := s.log
 	log.Info("server.mysql.wait.for.work[maxwait:60s]")
-	if err := s.mysql.WaitMysqlWorks(60 * 1000); err != nil {
+	if err := s.mysql.WaitMysqlWorks(TIMEOUT); err != nil {
 		log.Error("server.mysql.WaitMysqlWorks.error[%v]", err)
 		return
 	}

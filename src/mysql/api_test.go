@@ -28,7 +28,7 @@ func TestSetReadOnly(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	queryList := []string{
@@ -56,7 +56,7 @@ func TestStartSlaveIOThread(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "START SLAVE IO_THREAD"
@@ -73,7 +73,7 @@ func TestStopSlaveIOThread(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "STOP SLAVE IO_THREAD"
@@ -90,7 +90,7 @@ func TestStartSlave(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "START SLAVE"
@@ -107,7 +107,7 @@ func TestStopSlave(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "STOP SLAVE"
@@ -124,7 +124,7 @@ func TestChangeMasterTo(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	queryList := []string{"STOP SLAVE",
@@ -148,7 +148,7 @@ func TestChangeToMaster(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	queryList := []string{"STOP SLAVE",
@@ -169,7 +169,7 @@ func TestWaitUntilAfterGTID(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "SELECT WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS('1')"
@@ -186,7 +186,7 @@ func TestGetLocalGTID(t *testing.T) {
 	//log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	query := "SELECT @@SERVER_UUID"
@@ -208,7 +208,7 @@ func TestCheckGTID(t *testing.T) {
 	//log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// local is a normal follower, leader Executed_GTID_Set is ""
@@ -368,7 +368,7 @@ func TestGTIDGreaterThan(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// 1. show slave status OK
@@ -513,7 +513,7 @@ func TestGetGTID(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// 1. show slave status OK
@@ -634,7 +634,7 @@ func TestPromotableYes(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// 2. mock Slave_SQL_Running OK
@@ -684,7 +684,7 @@ func TestPromotableNot(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// 1. mock MysqlDead
@@ -791,7 +791,7 @@ func TestWaitMysqlWorks(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 	mysql.PingStart()
 	defer mysql.PingStop()
@@ -799,7 +799,7 @@ func TestWaitMysqlWorks(t *testing.T) {
 	// works
 	{
 		conf := config.DefaultMysqlConfig()
-		mysql := NewMysql(conf, 10000, log)
+		mysql := NewMysql(conf, QueryTimeout, log)
 		mysql.db = db
 
 		query := "SHOW SLAVE STATUS"
@@ -816,14 +816,14 @@ func TestWaitMysqlWorks(t *testing.T) {
 			"Yes",
 			"Yes")
 		mock.ExpectQuery(query).WillReturnRows(mockRows)
-		err = mysql.WaitMysqlWorks(10000)
+		err = mysql.WaitMysqlWorks(QueryTimeout)
 		assert.Nil(t, err)
 	}
 
 	// timeouts
 	{
 		conf := config.DefaultMysqlConfig()
-		mysql := NewMysql(conf, 10000, log)
+		mysql := NewMysql(conf, QueryTimeout, log)
 		mysql.db = db
 		mysql.PingStart()
 		defer mysql.PingStop()
@@ -846,7 +846,7 @@ func TestGlobalSysVar(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	queryList := []string{
@@ -877,7 +877,7 @@ func TestSemiSyncMaster(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	queryList := []string{
@@ -895,7 +895,7 @@ func TestSemiSyncMaster(t *testing.T) {
 	assert.Nil(t, err)
 
 	mock.ExpectExec(queryList[2]).WillReturnResult(sqlmock.NewResult(1, 1))
-	err = mysql.SetSemiSyncMasterTimeout(10000)
+	err = mysql.SetSemiSyncMasterTimeout(SemiSyncTimeout)
 	assert.Nil(t, err)
 }
 
@@ -907,7 +907,7 @@ func TestPurgeBinlogsTo(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.PANIC))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	// 1. show slave status OK
@@ -926,7 +926,7 @@ func TestSetMasterSysVars(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.ERROR))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 	err = mysql.SetMasterGlobalSysVar()
 	assert.Nil(t, err)
@@ -960,7 +960,7 @@ func TestSetSlaveSysVars(t *testing.T) {
 	// log
 	log := xlog.NewStdLog(xlog.Level(xlog.ERROR))
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	mysql.db = db
 
 	err = mysql.SetSlaveGlobalSysVar()

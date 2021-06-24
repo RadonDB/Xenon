@@ -21,6 +21,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	QueryTimeout    int    = 10000
+	SemiSyncTimeout uint64 = 10000
+)
+
 // MockGTID tuple.
 type MockGTID struct {
 	SetQueryTimeoutFn          func(int)
@@ -1082,7 +1087,7 @@ func NewMockGTIDX5ChangeToMasterError() *MockGTID {
 func MockMysql(log *xlog.Log, port int, h MysqlHandler) (string, *Mysql, func()) {
 	id := fmt.Sprintf("127.0.0.1:%d", port)
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 
 	// setup rpc
 	rpc, err := xrpc.NewService(xrpc.Log(log),
@@ -1108,7 +1113,7 @@ func MockMysql(log *xlog.Log, port int, h MysqlHandler) (string, *Mysql, func())
 func MockMysqlReplUser(log *xlog.Log, port int, h MysqlHandler) (string, *Mysql, func()) {
 	id := fmt.Sprintf("127.0.0.1:%d", port)
 	conf := config.DefaultMysqlConfig()
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 
 	// setup rpc
 	rpc, err := xrpc.NewService(xrpc.Log(log),

@@ -24,9 +24,9 @@ func TestMysql56Handler(t *testing.T) {
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
 
-	mysql := NewMysql(conf, 10000, log)
+	mysql := NewMysql(conf, QueryTimeout, log)
 	want := new(Mysql56)
-	want.SetQueryTimeout(10000)
+	want.SetQueryTimeout(QueryTimeout)
 	got := mysql.mysqlHandler
 	assert.Equal(t, want, got)
 }
@@ -40,7 +40,7 @@ func TestMysql56SetSemiWaitSlaveCount(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{
@@ -61,7 +61,7 @@ func TestMysql56ChangeUserPassword(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{
@@ -82,7 +82,7 @@ func TestMysql56CreateUser(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	// ssl is NO
@@ -119,7 +119,7 @@ func TestMysql56CreateUserWithPrivileges(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{
@@ -162,7 +162,7 @@ func TestMysql56CreateUserWithPrivilegesError(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{
@@ -205,7 +205,7 @@ func TestMysql56GrantAllPrivileges(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{
@@ -249,7 +249,7 @@ func TestMysql56GrantAllPrivilegesError(t *testing.T) {
 	log := xlog.NewStdLog(xlog.Level(xlog.DEBUG))
 	conf := config.DefaultMysqlConfig()
 	conf.Version = "mysql56"
-	mysql56 := NewMysql(conf, 10000, log)
+	mysql56 := NewMysql(conf, QueryTimeout, log)
 	mysql56.db = db
 
 	queryList := []string{

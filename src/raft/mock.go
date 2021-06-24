@@ -28,6 +28,11 @@ var (
 	longHeartbeatTimeoutForTest  = 500
 )
 
+const (
+	QueryTimeout    int    = 10000
+	SemiSyncTimeout uint64 = 10000
+)
+
 func setupRPC(rpc *xrpc.Service, raft *Raft) {
 	if err := rpc.RegisterService(raft.GetHARPC()); err != nil {
 		raft.PANIC("server.rpc.RegisterService.HARPC.error[%+v]", err)
@@ -84,15 +89,15 @@ func mockRafts(log *xlog.Log, conf *config.RaftConfig, port int, count int, idle
 		}
 
 		// setup mysql
-		mysql57 := mysql.NewMysql(config.DefaultMysqlConfig(), 10000, log)
+		mysql57 := mysql.NewMysql(config.DefaultMysqlConfig(), QueryTimeout, log)
 		mysql57.SetMysqlHandler(mysql.NewMockGTIDA())
 		mysql57.PingStart()
 
 		for i, id := range ids {
 			if idleStart != -1 && i >= idleStart {
-				raft = NewRaft(id, conf, 10000, log, mysql57, IDLE)
+				raft = NewRaft(id, conf, SemiSyncTimeout, log, mysql57, IDLE)
 			} else {
-				raft = NewRaft(id, conf, 10000, log, mysql57, FOLLOWER)
+				raft = NewRaft(id, conf, SemiSyncTimeout, log, mysql57, FOLLOWER)
 			}
 		}
 
